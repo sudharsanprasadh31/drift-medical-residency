@@ -27,7 +27,7 @@ This guide covers deploying Drift to production for web and mobile platforms.
    - Select your GitHub repository
    - Configure:
      - **Framework:** Other
-     - **Build Command:** `npx expo export:web`
+     - **Build Command:** `npx expo export --platform web`
      - **Output Directory:** `dist`
      - **Install Command:** `npm install`
 
@@ -58,7 +58,7 @@ Every push to `main` branch automatically deploys!
    - Connect to GitHub and select your repo
 
 2. **Configure Build:**
-   - **Build command:** `npx expo export:web`
+   - **Build command:** `npx expo export --platform web`
    - **Publish directory:** `dist`
    - **Environment variables:**
      ```
@@ -281,7 +281,7 @@ supabase db dump -f backup.sql
 3. **Use CDN** for assets (automatic with Vercel/Netlify)
 4. **Monitor bundle size:**
    ```bash
-   npx expo export:web --dump-assetmap
+   npx expo export --platform web --dump-assetmap
    ```
 
 ### Maintenance
@@ -308,7 +308,7 @@ supabase db dump -f backup.sql
 **Web:**
 - Check build logs in Vercel/Netlify
 - Verify all dependencies installed
-- Test `npx expo export:web` locally
+- Test `npx expo export --platform web` locally
 
 **Mobile:**
 - Check EAS build logs

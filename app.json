@@ -16,7 +16,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.drift.medicalresidency"
+      "bundleIdentifier": "com.drift.medicalresidency",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +30,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8e386419-fa47-42bf-a0e2-1e1d7a14c967"
+      }
+    },
+    "owner": "raidensudss-organization"
   }
 }

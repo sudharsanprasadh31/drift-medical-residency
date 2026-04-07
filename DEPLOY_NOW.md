@@ -286,7 +286,7 @@ git push
 ### Vercel build fails
 - Check build logs in Vercel dashboard
 - Verify `vercel.json` configuration
-- Try: `npx expo export:web` locally first
+- Try: `npx expo export --platform web` locally first
 
 ### EAS build fails
 - Check build logs at expo.dev
