@@ -86,6 +86,13 @@ export const getSpecialties = async (): Promise<Specialty[]> => {
 // APPROVAL OPERATIONS
 // ============================================
 
+/**
+ * Get pending approval requests.
+ * RLS policies automatically filter:
+ * - Admins: See all pending requests
+ * - Chief Residents: Only see requests from their own program
+ * - Residents: Only see their own requests
+ */
 export const getPendingApprovals = async (): Promise<ApprovalRequest[]> => {
   const { data, error } = await supabase
     .from('approval_requests')

@@ -168,6 +168,16 @@ export default function ApprovalsScreen() {
 
   return (
     <View style={styles.container}>
+      {/* Header Info for Chief Residents */}
+      {profile?.role === 'chief_resident' && profile?.program && (
+        <View style={styles.headerInfo}>
+          <Text style={styles.headerTitle}>Your Program Approvals</Text>
+          <Text style={styles.headerSubtitle}>
+            Showing approval requests for: {profile.program.program_name}
+          </Text>
+        </View>
+      )}
+
       <FlatList
         data={approvalRequests}
         keyExtractor={(item) => item.id}
@@ -177,7 +187,16 @@ export default function ApprovalsScreen() {
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No pending approvals</Text>
+            <Text style={styles.emptyText}>
+              {profile?.role === 'chief_resident'
+                ? 'No pending approvals from your program'
+                : 'No pending approvals'}
+            </Text>
+            {profile?.role === 'chief_resident' && (
+              <Text style={styles.emptySubtext}>
+                Only residents enrolling in your program will appear here
+              </Text>
+            )}
           </View>
         }
         contentContainerStyle={styles.listContent}
@@ -248,6 +267,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
+  },
+  headerInfo: {
+    backgroundColor: '#3498db',
+    padding: 16,
+    paddingTop: 20,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 4,
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    color: '#ecf0f1',
   },
   listContent: {
     padding: 16,
@@ -346,6 +380,13 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     color: '#7f8c8d',
+    textAlign: 'center',
+  },
+  emptySubtext: {
+    fontSize: 14,
+    color: '#95a5a6',
+    textAlign: 'center',
+    marginTop: 8,
   },
   modalContainer: {
     flex: 1,
