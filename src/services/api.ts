@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import { Program, Profile, ApprovalRequest, Specialty } from '../types';
+import { Program, Profile, ApprovalRequest, Specialty, PGYLevel } from '../types';
 
 // ============================================
 // PROFILE OPERATIONS
@@ -26,6 +26,7 @@ export const completeProfile = async (
     role: 'resident' | 'chief_resident';
     specialty: string;
     program_id: string;
+    pgy: PGYLevel;
   }
 ) => {
   const { data, error } = await supabase

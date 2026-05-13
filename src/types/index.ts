@@ -1,5 +1,6 @@
 export type UserRole = 'resident' | 'chief_resident' | 'admin';
 export type ApprovalStatus = 'pending' | 'approved' | 'rejected';
+export type PGYLevel = 'PGY0' | 'PGY1' | 'PGY2' | 'PGY3' | 'PGY4' | 'PGY5' | 'PGY6' | 'PGY7' | 'PGY8' | 'ALUMNI';
 
 export interface Program {
   id: string;
@@ -21,6 +22,7 @@ export interface Profile {
   role: UserRole;
   specialty: string | null;
   program_id: string | null;
+  pgy: PGYLevel | null;
   is_approved: boolean;
   is_profile_complete: boolean;
   created_at: string;

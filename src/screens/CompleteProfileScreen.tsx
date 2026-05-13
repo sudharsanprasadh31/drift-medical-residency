@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { useAuth } from '../services/AuthContext';
 import { completeProfile, getSpecialties, searchPrograms } from '../services/api';
-import { Specialty, Program } from '../types';
+import { Specialty, Program, PGYLevel } from '../types';
 
 export default function CompleteProfileScreen() {
   const { user, refreshProfile } = useAuth();
@@ -27,6 +27,10 @@ export default function CompleteProfileScreen() {
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [role, setRole] = useState<'resident' | 'chief_resident'>('resident');
+
+  // PGY dropdown
+  const [selectedPGY, setSelectedPGY] = useState<PGYLevel | ''>('');
+  const [showPGYModal, setShowPGYModal] = useState(false);
 
   // Specialty dropdown
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
@@ -81,7 +85,7 @@ export default function CompleteProfileScreen() {
 
   const handleSubmit = async () => {
     // Validation
-    if (!firstName || !lastName || !phoneNumber || !selectedSpecialty || !selectedProgram) {
+    if (!firstName || !lastName || !phoneNumber || !selectedSpecialty || !selectedProgram || !selectedPGY) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
@@ -95,6 +99,7 @@ export default function CompleteProfileScreen() {
         role,
         specialty: selectedSpecialty,
         program_id: selectedProgram.id,
+        pgy: selectedPGY as PGYLevel,
       });
 
       await refreshProfile();
@@ -200,6 +205,18 @@ export default function CompleteProfileScreen() {
               </TouchableOpacity>
             </View>
 
+            {/* PGY Selection */}
+            <Text style={styles.label}>PGY Level</Text>
+            <TouchableOpacity
+              style={styles.input}
+              onPress={() => setShowPGYModal(true)}
+              disabled={loading}
+            >
+              <Text style={selectedPGY ? styles.inputText : styles.placeholder}>
+                {selectedPGY || 'Select PGY Level'}
+              </Text>
+            </TouchableOpacity>
+
             {/* Specialty Selection */}
             <Text style={styles.label}>Specialty</Text>
             <TouchableOpacity
@@ -240,6 +257,40 @@ export default function CompleteProfileScreen() {
           </View>
         </View>
       </ScrollView>
+
+      {/* PGY Modal */}
+      <Modal
+        visible={showPGYModal}
+        animationType="slide"
+        transparent={true}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Select PGY Level</Text>
+            <FlatList
+              data={['PGY0', 'PGY1', 'PGY2', 'PGY3', 'PGY4', 'PGY5', 'PGY6', 'PGY7', 'PGY8', 'ALUMNI'] as PGYLevel[]}
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.modalItem}
+                  onPress={() => {
+                    setSelectedPGY(item);
+                    setShowPGYModal(false);
+                  }}
+                >
+                  <Text style={styles.modalItemText}>{item}</Text>
+                </TouchableOpacity>
+              )}
+            />
+            <TouchableOpacity
+              style={styles.modalCloseButton}
+              onPress={() => setShowPGYModal(false)}
+            >
+              <Text style={styles.modalCloseButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       {/* Specialty Modal */}
       <Modal
